@@ -39,6 +39,7 @@ clicked = False
 # Generic Functions
 def init_game():
     pygame.init()
+    pygame.mixer.init()
     pygame.font.init()
     screen = pygame.display.set_mode((WINDOW_WIDTH, WINDOW_HEIGHT))
     pygame.display.set_caption(TITLE)
@@ -79,6 +80,9 @@ def main():
     key_frame = 0
     game_over = False
 
+    # Sounds
+    pygame.mixer.music.load('main-theme.ogg')
+    pygame.mixer.music.play(-1)
     while running:
         global score
         global clicked
@@ -109,6 +113,8 @@ def main():
                     key_frame = 0
                     game_over = False
                     print(clicked)
+                    pygame.mixer.music.load('main-theme.ogg')
+                    pygame.mixer.music.play(-1)
                     clicked = False
                     direction = 1
         else:
@@ -179,10 +185,16 @@ def check_game_over(snake):
             head = False
             continue
         if snake[0] == segment:
+            pygame.mixer.music.load('game_over.ogg')
+            pygame.mixer.music.play(-1)
             return True
     if not(0 < snake[0][0] < WINDOW_WIDTH):
+        pygame.mixer.music.load('game_over.ogg')
+        pygame.mixer.music.play(-1)
         return True
     if not(0 < snake[0][1] < WINDOW_HEIGHT):
+        pygame.mixer.music.load('game_over.ogg')
+        pygame.mixer.music.play(-1)
         return True
     return False
 # Startup
